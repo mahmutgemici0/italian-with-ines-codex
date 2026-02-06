@@ -1,0 +1,24 @@
+# Node
+node_modules
+.pnpm-store
+.next
+coverage
+
+# Python
+__pycache__/
+*.pyc
+.venv
+.pytest_cache
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Build
+apps/web/dist
+apps/api/.mypy_cache
+apps/api/alembic.ini
+
+# OS
+.DS_Store

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 42 31% 96%;
+  --foreground: 206 35% 16%;
+  --muted: 42 25% 90%;
+  --primary: 11 89% 58%;
+  --accent: 153 50% 35%;
+  --border: 30 20% 83%;
+}
+
+body {
+  @apply bg-background text-foreground font-sans;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(255, 133, 89, 0.22), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(76, 155, 126, 0.2), transparent 30%);
+}

@@ -14,8 +14,8 @@ const config: Config = {
         border: "hsl(var(--border))",
       },
       fontFamily: {
-        sans: ["'Manrope'", "system-ui", "sans-serif"],
-        serif: ["'Cormorant Garamond'", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "serif"],
       },
     },
   },

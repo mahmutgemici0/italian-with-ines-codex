@@ -1,36 +1,77 @@
 import stripe
+import secrets
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
-from app.core.deps import get_current_user
+from app.core.security import hash_password
 from app.db.session import get_db
 from app.models.booking import Booking
+from app.models.course import Course
 from app.models.course_enrollment import CourseEnrollment
+from app.models.product_digital import ProductDigital
 from app.models.purchase import Purchase
 from app.models.subscription import Subscription
+from app.models.user import User
 from app.services.downloads import create_download_token
 from app.services.stripe_service import create_checkout_session
 
 settings = get_settings()
 router = APIRouter(prefix="/payments", tags=["payments"])
+optional_bearer = HTTPBearer(auto_error=False)
 
 
 @router.post("/checkout")
-def checkout(payload: dict, current_user=Depends(get_current_user)):
+def checkout(
+    payload: dict,
+    db: Session = Depends(get_db),
+    credentials: HTTPAuthorizationCredentials | None = Depends(optional_bearer),
+):
     mode = payload.get("mode", "payment")
     price_id = payload.get("price_id")
     product_type = payload.get("product_type")
     product_id = payload.get("product_id")
     booking_id = payload.get("booking_id", "")
+    email = payload.get("email", "").strip().lower()
+    name = payload.get("name", "").strip()
 
     if not price_id or not product_type or not product_id:
         raise HTTPException(status_code=400, detail="Missing fields")
 
+    user: User | None = None
+
+    if credentials:
+        try:
+            token = credentials.credentials
+            decoded = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+            user_id = decoded.get("sub")
+            if user_id:
+                user = db.get(User, user_id)
+        except JWTError:
+            user = None
+
+    if not user:
+        if not email:
+            raise HTTPException(status_code=400, detail="Login or provide email for guest checkout")
+        user = db.query(User).filter(User.email == email).first()
+        if not user:
+            user = User(
+                email=email,
+                name=name or "Guest",
+                hashed_password=hash_password(secrets.token_urlsafe(24)),
+                role="user",
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+
     url = create_checkout_session(
         mode=mode,
         price_id=price_id,
-        client_reference_id=current_user.id,
+        client_reference_id=user.id,
+        customer_email=user.email,
         metadata={
             "product_type": product_type,
             "product_id": product_id,
@@ -76,11 +117,18 @@ async def stripe_webhook(
         db.refresh(purchase)
 
         if product_type == "course":
-            enrollment = CourseEnrollment(user_id=user_id, course_id=product_id, status="active", progress_json={"percent": 0})
-            db.add(enrollment)
-            db.commit()
+            course = db.get(Course, product_id) or db.query(Course).filter(Course.slug == product_id).first()
+            if course:
+                enrollment = CourseEnrollment(user_id=user_id, course_id=course.id, status="active", progress_json={"percent": 0})
+                db.add(enrollment)
+                db.commit()
 
         if product_type == "digital":
+            product = db.get(ProductDigital, product_id) or db.query(ProductDigital).filter(ProductDigital.slug == product_id).first()
+            if product:
+                purchase.product_id = product.id
+                db.add(purchase)
+                db.commit()
             create_download_token(db, purchase.id)
 
         if product_type == "membership":

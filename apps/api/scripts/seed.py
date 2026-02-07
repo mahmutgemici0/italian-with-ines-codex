@@ -60,6 +60,28 @@ def run_seed() -> None:
                     file_key="digital/50-essential-phrases.pdf",
                 )
             )
+        if not db.query(ProductDigital).filter(ProductDigital.slug == "travel-dialogues-audio-pack").first():
+            db.add(
+                ProductDigital(
+                    title="Travel Dialogues Audio Pack",
+                    slug="travel-dialogues-audio-pack",
+                    description="Audio drills for airports, hotels, restaurants, and daily travel moments.",
+                    price=1900,
+                    stripe_price_id="price_digital_travel_audio",
+                    file_key="digital/travel-dialogues-audio-pack.zip",
+                )
+            )
+        if not db.query(ProductDigital).filter(ProductDigital.slug == "italian-verb-maps-workbook").first():
+            db.add(
+                ProductDigital(
+                    title="Italian Verb Maps Workbook",
+                    slug="italian-verb-maps-workbook",
+                    description="Printable workbook to master high-frequency verb patterns quickly.",
+                    price=2400,
+                    stripe_price_id="price_digital_verb_maps",
+                    file_key="digital/italian-verb-maps-workbook.pdf",
+                )
+            )
 
         if not db.query(ResourceFree).filter(ResourceFree.slug == "free-a1-cheat-sheet").first():
             db.add(

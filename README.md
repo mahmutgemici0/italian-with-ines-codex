@@ -57,6 +57,7 @@ Production-oriented MVP for a creator-commerce language brand.
 - `JWT_SECRET`, `JWT_ALGORITHM`, `JWT_EXPIRE_MINUTES`
 - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_SUCCESS_URL`, `STRIPE_CANCEL_URL`, `STRIPE_PORTAL_RETURN_URL`
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_OAUTH_REDIRECT_URI`
 - `FRONTEND_URL`, `CORS_ORIGINS`
 - `S3_ENDPOINT`, `S3_BUCKET`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`
 - `EMAIL_PROVIDER`, `RESEND_API_KEY`, `POSTMARK_API_KEY`
@@ -74,11 +75,14 @@ Production-oriented MVP for a creator-commerce language brand.
 
 ## Core Implemented Capabilities
 - JWT auth, admin route guards (API + frontend middleware)
+- Google OAuth login callback flow (`/auth/oauth/google/start`)
 - Course/product/resource catalogs and CRUD scaffolding
 - Stripe checkout session creation + webhook-driven access grants
+- Guest checkout support (email-based checkout without manual sign-up)
 - Secure digital delivery model (expiring token + remaining count)
 - Booking model + `.ics` generation endpoint
 - Membership subscription model + billing portal endpoint
+- In-site level test with gated result reveal and course recommendations
 - SEO basics (`metadata`, `sitemap.xml`, `robots.txt`, OG)
 - Responsive mobile-first page scaffolds for all required routes
 - Basic tests:

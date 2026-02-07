@@ -29,6 +29,10 @@ class Settings(BaseSettings):
 
     zoom_default_link: str = ""
 
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    google_oauth_redirect_uri: str = "http://localhost:8000/auth/oauth/google/callback"
+
     class Config:
         env_file = ".env"
         extra = "ignore"

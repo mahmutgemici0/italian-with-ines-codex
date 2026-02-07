@@ -16,7 +16,7 @@ export function SiteHeader() {
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
           <a href="/" className="font-serif text-xl font-semibold">Italian with Ines</a>
-          <nav className="hidden items-center gap-4 lg:flex">
+          <nav className="hidden items-center gap-4 lg:flex" aria-label="Primary">
             {nav.map((item) => (
               <a key={item.href} href={item.href} className="text-sm text-foreground/85 hover:text-foreground">
                 {item.label}
@@ -24,8 +24,9 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <Button href="/login" variant="ghost">Login</Button>
-            <Button href="/start-here">Start Here</Button>
+            <Button href="/login" variant="ghost">Log in</Button>
+            <Button href="/signup" variant="ghost">Sign up</Button>
+            <Button href="/start-here" className="hidden sm:inline-flex">Free level test</Button>
           </div>
         </div>
       </Container>

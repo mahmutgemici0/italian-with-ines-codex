@@ -5,7 +5,14 @@ settings = get_settings()
 stripe.api_key = settings.stripe_secret_key
 
 
-def create_checkout_session(*, mode: str, price_id: str, client_reference_id: str, metadata: dict[str, str]) -> str:
+def create_checkout_session(
+    *,
+    mode: str,
+    price_id: str,
+    client_reference_id: str,
+    metadata: dict[str, str],
+    customer_email: str | None = None,
+) -> str:
     session = stripe.checkout.Session.create(
         mode=mode,
         line_items=[{"price": price_id, "quantity": 1}],
@@ -13,6 +20,7 @@ def create_checkout_session(*, mode: str, price_id: str, client_reference_id: st
         cancel_url=settings.stripe_cancel_url,
         client_reference_id=client_reference_id,
         metadata=metadata,
+        customer_email=customer_email or None,
     )
     return session.url
 

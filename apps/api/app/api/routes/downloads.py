@@ -22,6 +22,8 @@ def download_with_token(token: str, db: Session = Depends(get_db)):
 
     product = db.get(ProductDigital, purchase.product_id)
     if not product:
+        product = db.query(ProductDigital).filter(ProductDigital.slug == purchase.product_id).first()
+    if not product:
         raise HTTPException(status_code=404, detail="Product missing")
 
     # Placeholder for signed S3 URL generation.

@@ -1,12 +1,14 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { OAuthButtons } from "@/components/oauth-buttons";
 import { Button, Card, Container, SectionTitle } from "@/components/ui";
 import { auth } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const params = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -33,14 +35,17 @@ export default function LoginPage() {
   return (
     <Container>
       <section className="py-16">
-        <SectionTitle title="Login" />
+        <SectionTitle title="Login" subtitle="Use email/password or continue with Google and Apple." />
         <Card className="mx-auto max-w-md">
           <form onSubmit={onSubmit} className="space-y-3">
             <input className="h-11 w-full rounded-xl border border-border px-3" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input className="h-11 w-full rounded-xl border border-border px-3" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             {error ? <p className="text-sm text-red-600">{error}</p> : null}
-            <Button>Login</Button>
+            {params.get("oauth") ? <p className="text-xs text-foreground/60">OAuth status: {params.get("oauth")}</p> : null}
+            <Button className="w-full">Login</Button>
           </form>
+          <div className="my-4 h-px bg-border" />
+          <OAuthButtons />
         </Card>
       </section>
     </Container>

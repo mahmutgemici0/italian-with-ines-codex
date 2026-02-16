@@ -40,6 +40,12 @@ def checkout(
     if not price_id or not product_type or not product_id:
         raise HTTPException(status_code=400, detail="Missing fields")
 
+    if not settings.stripe_secret_key or settings.stripe_secret_key.endswith("_xxx"):
+        raise HTTPException(
+            status_code=503,
+            detail="Payments are not configured yet. Add STRIPE_SECRET_KEY to enable checkout.",
+        )
+
     user: User | None = None
 
     if credentials:
@@ -67,17 +73,21 @@ def checkout(
             db.commit()
             db.refresh(user)
 
-    url = create_checkout_session(
-        mode=mode,
-        price_id=price_id,
-        client_reference_id=user.id,
-        customer_email=user.email,
-        metadata={
-            "product_type": product_type,
-            "product_id": product_id,
-            "booking_id": booking_id,
-        },
-    )
+    try:
+        url = create_checkout_session(
+            mode=mode,
+            price_id=price_id,
+            client_reference_id=user.id,
+            customer_email=user.email,
+            metadata={
+                "product_type": product_type,
+                "product_id": product_id,
+                "booking_id": booking_id,
+            },
+        )
+    except stripe.error.StripeError as exc:
+        raise HTTPException(status_code=400, detail=f"Stripe checkout failed: {exc.user_message or str(exc)}") from exc
+
     return {"url": url}
 
 

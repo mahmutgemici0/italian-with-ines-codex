@@ -1,5 +1,6 @@
 import { FAQSection } from "@/components/faq";
 import { NewsletterBlock } from "@/components/newsletter";
+import { NextLiveSession } from "@/components/next-live-session";
 import { ProductCard } from "@/components/product-card";
 import { Button, Container, SectionTitle } from "@/components/ui";
 
@@ -47,6 +48,12 @@ export default function HomePage() {
             <ProductCard title="50 Essential Phrases PDF" description="Travel + daily conversation toolkit." price={1200} href="/shop/50-essential-phrases" />
             <ProductCard title="Weekly Live Classroom" description="Group accountability + speaking feedback." price={2900} href="/membership" />
           </div>
+        </Container>
+      </section>
+
+      <section className="py-10">
+        <Container>
+          <NextLiveSession />
         </Container>
       </section>
 

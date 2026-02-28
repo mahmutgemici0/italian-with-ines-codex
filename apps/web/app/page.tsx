@@ -61,38 +61,23 @@ const posts = [
 export default function HomePage() {
   return (
     <>
-      <section className="pb-12 pt-10 sm:pt-14">
+      <section className="pb-14 pt-12 sm:pb-16 sm:pt-16">
         <Container>
-          <div className="mx-auto max-w-3xl space-y-6 text-center">
-            <p className="inline-block rounded-full border border-border bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground/65">
-              Italian with Ines
-            </p>
-            <h1 className="font-serif text-5xl leading-[1.05] sm:text-7xl">
-              Learn Italian <span className="text-primary">with Ines</span>
+          <div className="mx-auto max-w-2xl space-y-5 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50">Italian with Ines</p>
+            <h1 className="font-serif text-4xl leading-tight sm:text-5xl">
+              Learn Italian with clarity and consistency.
             </h1>
-            <p className="mx-auto max-w-2xl text-sm text-foreground/75 sm:text-base">
-              Structured courses, private sessions, and weekly practice designed to help you speak Italian naturally
-              and confidently.
+            <p className="mx-auto max-w-xl text-base leading-relaxed text-foreground/70">
+              Practical lessons, guided practice, and gentle progression for students who want steady fluency.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
               <Button href="/courses">Explore Courses</Button>
               <Button href="/bookings" variant="ghost">
                 Book a Session
               </Button>
             </div>
-            <div className="flex items-center justify-center gap-3 text-xs text-foreground/60">
-              <div className="flex -space-x-3">
-                {["A", "L", "M", "S"].map((initial) => (
-                  <span
-                    key={initial}
-                    className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-background bg-accent/20 text-[10px] font-semibold"
-                  >
-                    {initial}
-                  </span>
-                ))}
-              </div>
-              <p>Trusted by 2,000+ students worldwide</p>
-            </div>
+            <p className="pt-1 text-sm text-foreground/55">Trusted by 2,000+ students worldwide</p>
           </div>
         </Container>
       </section>
@@ -101,7 +86,7 @@ export default function HomePage() {
         <Container>
           <div className="mx-auto max-w-5xl">
             <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-foreground/50">Why students choose this method</p>
-            <h2 className="mt-3 text-center font-serif text-3xl sm:text-5xl">Everything you need to speak Italian fluently</h2>
+            <h2 className="mt-3 text-center font-serif text-2xl sm:text-4xl">Everything you need to speak Italian fluently</h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((feature) => (
                 <article key={feature.title} className="rounded-3xl border border-border bg-white/90 p-5 text-left">
@@ -118,7 +103,7 @@ export default function HomePage() {
         <Container>
           <div className="mx-auto max-w-5xl">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-foreground/50">Courses</p>
-            <h2 className="mt-2 font-serif text-3xl sm:text-5xl">Find your perfect course</h2>
+            <h2 className="mt-2 font-serif text-2xl sm:text-4xl">Find your perfect course</h2>
             <p className="mt-2 max-w-2xl text-sm text-foreground/70 sm:text-base">Choose the program that matches your level and goals, from foundations to advanced fluency.</p>
             <div className="mt-6 grid gap-5 md:grid-cols-3">
               {courses.map((course, index) => (
@@ -144,7 +129,7 @@ export default function HomePage() {
             <div className="h-72 rounded-3xl bg-[linear-gradient(135deg,#c9d7f8,#f6c6af)]" />
             <div className="space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-foreground/50">Ciao! I'm Ines.</p>
-              <h2 className="font-serif text-4xl leading-tight">Your Italian coach for real-world fluency</h2>
+              <h2 className="font-serif text-3xl leading-tight sm:text-4xl">Your Italian coach for real-world fluency</h2>
               <p className="text-sm text-foreground/70 sm:text-base">
                 I help learners go from textbook Italian to confident, natural communication through simple routines and
                 practical conversation training.
@@ -171,7 +156,7 @@ export default function HomePage() {
       <section className="pb-12">
         <Container>
           <div className="mx-auto max-w-5xl">
-            <h2 className="font-serif text-3xl sm:text-5xl">Loved by students worldwide</h2>
+            <h2 className="font-serif text-2xl sm:text-4xl">Loved by students worldwide</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {testimonials.map((testimonial) => (
                 <blockquote key={testimonial.name} className="rounded-3xl border border-border bg-white/90 p-5 text-sm text-foreground/75">
@@ -187,7 +172,7 @@ export default function HomePage() {
       <section className="pb-12">
         <Container>
           <div className="mx-auto max-w-5xl">
-            <h2 className="font-serif text-3xl sm:text-5xl">Tips, culture & language insights</h2>
+            <h2 className="font-serif text-2xl sm:text-4xl">Tips, culture & language insights</h2>
             <div className="mt-6 grid gap-5 md:grid-cols-3">
               {posts.map((post, index) => (
                 <article key={post} className="overflow-hidden rounded-3xl border border-border bg-white">
@@ -206,7 +191,7 @@ export default function HomePage() {
         <Container>
           <div className="mx-auto max-w-5xl rounded-[2rem] bg-foreground px-6 py-10 text-center text-white sm:px-10">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/65">Get weekly Italian tips in your inbox</p>
-            <h2 className="mt-3 font-serif text-3xl sm:text-5xl">Simple, practical lessons every week</h2>
+            <h2 className="mt-3 font-serif text-2xl sm:text-4xl">Simple, practical lessons every week</h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm text-white/80 sm:text-base">Join our newsletter for speaking prompts, mini vocabulary packs, and cultural notes to keep your Italian fresh.</p>
             <Button href="/start-here" className="mt-6 bg-primary px-8">
               Subscribe
@@ -218,7 +203,7 @@ export default function HomePage() {
       <section className="pb-10">
         <Container>
           <div className="mx-auto max-w-4xl rounded-[2rem] border border-border bg-white px-6 py-9 text-center sm:px-10">
-            <h2 className="font-serif text-3xl sm:text-5xl">
+            <h2 className="font-serif text-2xl sm:text-4xl">
               Ready to start your <span className="text-primary">Italian journey</span>?
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm text-foreground/70 sm:text-base">Choose a course, book a private lesson, or begin with our free level quiz and personalized study path.</p>
